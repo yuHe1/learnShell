@@ -1,11 +1,11 @@
-#!/bin/bash -ex
-port=80
-errors="$( netstat -aon | grep $port )"
-echo $errors
-# if [ ${#errors[@]} -gt 0 ]; then
-if [ ! -z  $errors ]; then
-    echo "$port is used"
-    exit 1
+#!/bin/sh -ex
+port=$1
+#errors=$( netstat -aon | grep $port )
+
+#echo $errors
+if [ "$(lsof -i:$port)" ]; then # netstat -aon | grep $port #in linux
+  echo "is in use"
+  exit 1
 else
-  echo "yes"
+  echo "not used "
 fi
